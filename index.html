@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<title>온라인 프로필</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @font-face {
+            font-family: "Maplestory Light";
+            src: url("Maplestory Light.ttf") format("truetype");
+        }
+        @media all and (min-width:901px) {
+            .svgdiv {display: none;}
+            * {box-sizing: border-box; margin: 0; padding: 0;}
+            html{scroll-behavior: smooth;}
+            li,p {line-height: 2.0; font-size:0.9em; margin: 3px 0 3px 20px;}
+            #container {display: grid; grid-template-columns: 300px 600px; grid-template-rows: 1fr; margin: 0 auto; width:900px; background:#fff;}
+            aside {grid-column: 1; padding:20px 50px;}
+            #detail {margin-top: 10px;}
+            .change>li:hover{background-color: rgb(240, 226, 151); color: black; font-style: italic; font-weight: bold; transition: 1s;}
+            #main {grid-column: 2; height:100%; padding:20px;}
+            #main > section {width:500px;padding:20px;margin:10px;border-bottom:1px dotted #222;}
+            section > p, section>table{margin-left:40px;}
+            section  a:hover{text-decoration: underline;}
+            aside h1 {font-size:1.8em; font-variant: small-caps;}
+            aside h2 {font-size:1.2em; margin-top: 20px;}
+            #namecard p {font-size:0.9em;color:rgb(99, 99, 99);}
+            #namecard>h1 {font-size: 28px;}
+            .subtitle {font-size:1.5em;line-height:0.9em;}
+            .subtitle::before {content:""; display:block; width:24px; height:24px; float:left; margin:0 15px 0 0;}
+            section > p {font-size:0.9em;}
+            section > h2 {margin-bottom: 10px;}
+            table {width:90%;border:2px solid #222; border-collapse: collapse; text-align: center;}
+            thead {background:#eee;}
+            th, td {border:1px solid #ccc; padding:5px; font-size:0.8em;}
+            a, a:visited {color: #222; text-decoration: none;}
+            #sns > ul {padding-left: 0;}
+            #sns > ul > li { display: inline-block; width:80px;}
+            img {border: gray solid ;border-radius: 50%;width: 200px;height: 200px;margin-left: -3px; margin-bottom: 15px;}
+            .skills>ul {transition-duration: 3s;}
+            footer > h3 > a{text-decoration: none; text-align: center; font-weight: bold; margin-left: 40%;}
+            .webdev > ul > li { margin-left: -10px; list-style: none; margin-bottom: 10px;}
+            .webdev > ol > li>iframe {width: 450px;}
+            .nowi {display: none;}
+            .mysvg {display: none;}
+            .svgwrapper{display: none;}
+        }
+        body {
+            font-family: "Maplestory Light", sans-serif;
+            background-image:url("images/1920maple.jpg");
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .wrapper {display: none;}
+        .hidden {display: none;}
+        @media all and (min-width:601px) and (max-width: 900px) {
+            * {margin: 0; padding: 0; text-decoration: none; color: black;}
+            #container {display: none;}
+            body{background-image: none;}
+            .hidden {display: flex;min-height: 100vh; justify-content: center;align-items: center;}
+            .hidden:hover {animation: RYB 3s infinite;}
+            @keyframes RYB {
+                33% {
+                    background-color: red;
+                }
+                66% {
+                    background-color: yellow;
+                }
+                99% {
+                    background-color: blue;
+                }
+            }
+            svg circle {
+                animation: circle 1s linear infinite;
+                transform-origin: center;
+                transform-box: fill-box;
+            }
+            @keyframes circle {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+            .svgwrapper{display: none;}
+        }
+        @media all and (max-width: 600px) {
+            * {margin: 0; padding: 0; box-sizing: border-box;}
+            html{scroll-behavior: smooth;}
+            body {background-image: none;min-height: 100vh; display: flex; justify-content: center; align-items: center;}
+            li {margin-left: 2vw;}
+            .change>li:hover{background-color: rgb(240, 226, 151); color: black; font-style: italic; font-weight: bold;}
+            #container {}
+            aside {position: absolute; left: 0; right: 0; top: 0; width: 100vw; height: 450px;}
+            .namecard > img {padding-left: 10px; padding-top: 10px; width: 270px; height: 270px; border-radius: 50%;}
+            .namecard > h1 {padding-left: 35px; padding-top: 30px;}
+            /* .svgdiv {position: absolute; top: 450px; left: 0; right: 0; width: 100vw; height: 150px;}
+            .svgwrap {width: 300px; height: 100vh; margin: 0 auto;} */
+            #main {position: absolute; top: 450px; left: 0; right: 0;}
+            .namecard p {padding-left: 120px; padding-top: 10px;}
+            #menus {position: absolute; left: 300px; top: 0px; line-height: 30px;}
+            .jnuguide {margin-left: -50px;}
+            #main > section {width:500px;margin:10px; padding-top: 30px; padding-bottom: 30px; border-bottom:1px dotted #222;}
+            #main > section:first-child {padding-top: 50px; border-top: 5px solid black;}
+            #main > section:nth-child(2) {line-height: 35px;}
+            #main > section:nth-child(3) {line-height: 30px;}
+            #main > section:nth-child(4) {line-height: 30px;}
+            section > p, section>table{margin-left:40px;}
+            section  a:hover{text-decoration: underline;}
+            aside h1 {font-size:1.8em; font-variant: small-caps;}
+            aside h2 {font-size:1.2em; margin-top: 20px;}
+            .subtitle {font-size:1.5em;line-height:0.9em;}
+            .subtitle::before {content:""; display:block; width:24px; height:24px; float:left; margin:0 15px 0 0;}
+            section > p {font-size:0.9em;}
+            section > h2 {margin-bottom: 10px;}
+            table {width:90%;border:2px solid #222; border-collapse: collapse; text-align: center;}
+            thead {background:#eee;}
+            th, td {border:1px solid #ccc; padding:5px; font-size:0.8em;}
+            a, a:visited {color: #222; text-decoration: none;}
+            footer > h3 > a{text-decoration: none; text-align: center; font-weight: bold; margin-left: 40%;}
+            footer {padding-top: 20px; padding-bottom: 20px; border-top: 1px dotted #222;}
+            .div3d {height: 500px;}
+            .webdev > ul > li { margin-left: -10px; list-style: none; margin-bottom: 10px;}
+            .webdev > ol > li>iframe {width: 400px;}
+            .boxwrapper {
+                width: 300px;
+                height: 500px;
+                position: relative;
+                top: 0px;
+                left: 100px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transform-style: preserve-3d;               
+            }
+            @keyframes ani {
+                0% {
+                    transform: rotateY(0deg);
+                }
+                100% {
+                    transform:rotateY(1turn);
+                }
+            }
+            .boxwrapper:hover {
+                animation: ani 5s linear infinite;
+            }
+            .boxwrapper div {
+                width: 100%;
+                height: 100%;
+                background-color: var(--color1);
+                position: absolute;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                text-transform: uppercase;
+                font-size: 3em;
+                font-weight: 800;
+                letter-spacing: .2em;
+                border: 2px solid #ccc;
+            }
+            .boxwrapper .left, .boxwrapper .right {
+                width: 300px;
+                height: 300px;
+            }
+            .boxwrapper .front, .boxwrapper .back {
+                width: 300px;
+                height: 300px;
+            }
+            .boxwrapper .left {
+                transform: rotateY(-90deg) translateZ(150px);
+                background-image: url(https://avatars.githubusercontent.com/u/82068552?s=400&u=6567f395eca76477b6723dda87ad25575c492bd7&v=4);
+                background-size: 100% 100%;
+            }
+            .boxwrapper .right {
+                transform: rotateY(90deg) translateZ(150px);
+                background-image: url(https://scontent-ssn1-1.xx.fbcdn.net/v/t1.18169-9/22045744_533871330338037_6019477512728608497_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=2luOTcxmUZsAX8bB5Yt&_nc_ht=scontent-ssn1-1.xx&oh=00_AT_fJ_5uLIcvN04AnE3OC_5wItlNUknZdc34FrNvtc9x1Q&oe=61E1B4D9);
+                background-size: 100% 100%;
+            }
+            .boxwrapper .front {
+                transform: translateZ(150px);
+                background-image: url(images/front.jpg);
+                background-size: 100% 100%;
+            }
+            .boxwrapper .back {
+                transform: rotateY(0.5turn) translateZ(150px);
+                background-image: url(images/back.jpg);
+                background-size: 100% 100%;
+            }
+            .hidden {display: none;}
+            .mysvg {margin-top: 50px; margin-left: 110px; display: none;}
+            svg path {
+                stroke: black;
+                stroke-width: 5;
+                stroke-dasharray: 1493px;
+                stroke-dashoffset: 1493px;
+                animation: chg 7s linear forwards;
+            }
+            @keyframes chg {
+                0% {
+                    fill: transparent;
+                }
+                90% {
+                    stroke-dashoffset: 0;
+                }
+                100% {
+                    fill: rgb(98, 197, 236);
+                }
+            }
+            .svgwrapper{height: 200px;}
+        }
+        
+    </style>
+</head>
+<body id="first">
+        <div id="container">
+            <aside>
+                <div class="namecard">
+                    <img src="https://avatars.githubusercontent.com/u/82068552?s=400&u=6567f395eca76477b6723dda87ad25575c492bd7&v=4" alt="깃허브 이미지">
+                    <h1>Kyeongbeom Kim</h1>
+                    <p>Hello :)</p>
+                </div>
+                <div id="menus">
+                    <div id="menu" class="Menu">
+                        <h2>MENU</h2>
+                        <ul class="change">
+                            <li><a href="#who am I">Who am I?</a></li>
+                            <li><a href="#Experience">Experience </a></li>
+                            <li><a href="#skills">skills</a></li>
+                            <li><a href="#Certificate">Certificate</a></li>
+                            <li><a href="#Education">Education</a></li>
+                        </ul>
+                    </div>
+                    <div id="detail">
+                        <p>Jeju, Korea</p>
+                        <p>Jeju National Univ.<br>(Computer Engineering)</p>
+                    </div>
+                    <div id="sns">
+                        <h2>SNS</h2>
+                        <ul>
+                            <li><a href="https://github.com/Kimkyeongbeom4844" target="_blank">Github</a></li>
+                        </ul>
+                    </div>
+                    
+                </div>   
+            </aside>
+            <div id="main">
+                <!-- 자기소개 -->
+                <section>
+                    <h2 class="subtitle" id="who am I">Who am I?</h2>
+                    <p>안녕하세요~! 저는 컴퓨터공학전공 17학번 김경범입니다. <br><mark>프론트엔드 분야</mark>에 관심이 많아 시험공부도 하지 않고 코딩만 합니다 :)</p>
+                </section>
+    
+                <!-- 경험 -->
+                <section>
+                    <h2 class="subtitle" id="Experience">Experience</h2>
+                    <ul style="margin-left: 8%;">
+                        <li>웹 페이지 개발
+                            <ul>    
+                                <li>템플릿을 이용한 개인블로그 작성경험<br>☞ <q><a href="https://kimkyeongbeom4844.netlify.app/" target="_blank">https://kimkyeongbeom4844.netlify.app/</a></q>
+                            </ul>
+                        </li>
+                        <li>웹 디자인 관련
+                            <ul>
+                                <li>2021.7 웹 디자인 기능사 필기 합격</li>
+                                <li>2021.11 웹 디자인 기능사 실기 준비 중</li>
+                            </ul>                        
+                        </li>
+                        <li>Team OWL(Our Webdev Laboratory)
+                            <ul>
+                                <li>현재 아는 형과 2인 개발중이며, 제주대학교 안내 서비스입니다~<br>(반응형 웹과 카카오맵 API를 적용)<br>☞ <q><a href="https://jeju-owl.github.io/JNU-guide/" target="_blank">https://jeju-owl.github.io/JNU-guide/</a></q>
+                                <iframe class="jnuguide" src="https://jeju-owl.github.io/JNU-guide/"width="450px" height="700px"></iframe>
+                            </ul>
+                        </li>
+                        <li class="webdev">2021 Webdev workplace
+                            <ol>
+                                <li>최신 웹 디자인 트렌드<iframe src="index1.html"height="300px"></iframe></li>
+                                <li>Hello Dialog<iframe src="index2.html"height="100px"></iframe></li>
+                                <li>Tables<iframe src="Table.html"height="300px"></iframe></li>
+                                <li>프론트엔드 개발자 지원서<iframe src="Form.html"height="500px"></iframe></li>
+                            </ol>
+                        </li>
+                    </ul>             
+                </section>
+    
+                <!-- 숙련도 -->
+                <section>
+                    <h2 class="subtitle" id="skills">Skills</h2>
+                    <ul style="margin-left: 5%;">
+                        <li class="html"><label>HTML 5</label>
+                            <progress id="bar" value="95" max="100" style="margin-left: 7.5%;">
+                                <span id="progress"> </span></progress>    
+                        <li><label>CSS 3</label>
+                            <progress id="bar1" value="90" max="100" style="margin-left: 10%;">
+                                <span id="progress1"> </span></progress>
+                        <li><label>JavaScript</label>
+                            <progress id="bar2" value="35" max="100" style="margin-left: 1%;">
+                                <span id="progress2"> </span></progress>
+                        <li><label>JQuery</label>
+                            <progress id="bar3" value="30" max="100" style="margin-left: 7.5%;">
+                                <span id="progress3"> </span></progress>
+                        <li><label>Node.JS</label>
+                            <progress id="bar4" value="0" max="100" style="margin-left: 6%;">
+                                <span id="progress4"> </span></progress>
+                    </ul>
+                </section>
+               
+                <!-- 자격증 -->
+                <section>
+                    <h2 class="subtitle" id="Certificate">Certificate</h2>
+                    <ul style="margin-left: 5%;">
+                        <li> 코딩지도사
+                            <ul>
+                                <li> 2020.8 획득</li>
+                            </ul>
+                        </li>
+                        <li>웹 디자인 기능사
+                            <ul>
+                                <li>2021.7 웹 디자인 기능사 필기 합격</li>
+                                <li>2021.11 웹 디자인 기능사 실기 준비 중</li>
+                            </ul>                        
+                        </li>
+                        <li> 정보처리기사
+                            <ul>
+                                <li> 2022년에 준비!</li>
+                            </ul>
+                        </li>
+                    </ul>             
+                </section>
+                 
+                <!-- 학력 -->
+                <section>
+                    <h2 class="subtitle" id="Education">Education</h2>
+                    <table>
+                        <caption style="margin-bottom: 5px; margin-top: 10px;">- 학력 사항 -</caption>
+                        <thead>
+                            <tr>
+                                <th>출신학교</th>
+                                <th>전공</th>
+                                <th>기간</th>
+                                <th>구분</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>삼성초등학교</td>
+                                <td rowspan="3"> X </td>
+                                <td>2005 ~ 2010</td>
+                                <td rowspan="3">졸업</td>
+                            </tr>
+                            <tr>
+                                <td>제주중학교</td>
+                                <td>2011 ~ 2013</td>
+                            </tr>
+                            <tr>
+                                <td>오현고등학교</td>
+                                <td>2014 ~ 2016</td>
+                            </tr>
+                            <tr>
+                                <td>제주대학교</td>
+                                <td>컴퓨터공학전공</td>
+                                <td>2017~</td>
+                                <td>재학 중</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                </section>
+                <div class="svgwrapper">
+                    <h1 class="nowi" style="text-align: center;">나는 지금</h1>
+                    <h3 style="text-align: center;">(마우스를 올려보세요)</h3>
+                    <div class="mysvg">
+                    <svg width="269" height="103" viewBox="0 0 269 103" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M52.2031 44.5156V44.5003L52.2029 44.4851C52.1211 37.7907 50.6213 32.3141 47.2858 28.4927C43.8899 24.6022 38.9622 22.8438 32.9688 22.8438C28.8263 22.8438 25.128 23.9605 21.9219 26.1485V5V2.5H19.4219H5.875H3.375V5V77V79.5H5.875H19.4219H21.9219V77V41.6763C23.2002 39.8338 25.1112 38.8594 28.0469 38.8594C30.626 38.8594 31.8446 39.4905 32.4127 40.1297L32.422 40.1401L32.4314 40.1504C33.0817 40.8658 33.6562 42.2702 33.6562 44.8906V77V79.5H36.1562H49.7031H52.2031V77V44.5156ZM87.088 78.1408L87.785 79.5H89.3125H103H105.5V77V76.2031V75.5799L105.207 75.0296C104.176 73.0894 103.515 69.9302 103.484 65.2731V43.2969C103.484 37.0226 101.421 31.8635 97.0782 28.1784C92.849 24.5317 87.2589 22.8438 80.5938 22.8438C76.1786 22.8438 72.1174 23.6134 68.4516 25.2026C64.7951 26.7565 61.8449 28.9692 59.726 31.892C57.621 34.7954 56.5312 38.023 56.5312 41.5156V44.0156H59.0312H72.5781H74.0611C69.4323 44.7014 65.5107 46.1093 62.4003 48.3449L62.3927 48.3504C57.7052 51.7461 55.4062 56.6637 55.4062 62.75C55.4062 67.8344 57.3333 72.1435 61.1248 75.4975L61.1337 75.5053C64.9342 78.8352 69.6712 80.4375 75.1562 80.4375C79.5057 80.4375 83.3433 79.3034 86.5782 77.0178C86.7339 77.4065 86.9035 77.7812 87.088 78.1408ZM84.8906 43.1094V43.5156L81.1562 43.5156L81.1459 43.5156C79.0137 43.5245 76.9889 43.6429 75.0781 43.8779V41.5156C75.0781 40.2407 75.4707 39.479 76.1119 38.9267C76.8446 38.3215 78.0068 37.875 79.8906 37.875C82.0616 37.875 83.1106 38.4557 83.6524 39.0973L83.6628 39.1096L83.6733 39.1217C84.4041 39.965 84.8906 41.2061 84.8906 43.1094ZM127.438 96.5V77.8897C130.316 79.5932 133.645 80.4375 137.359 80.4375C144.149 80.4375 149.68 77.7458 153.698 72.4126C157.68 67.1389 159.547 60.2913 159.547 52.1094V51.4062C159.547 42.954 157.745 35.9834 153.844 30.7812C149.86 25.4698 144.229 22.8438 137.266 22.8438C133.165 22.8438 129.533 23.909 126.441 26.0299L126.228 23.7812H123.953H111.391H108.891V26.2812V96.5V99H111.391H124.938H127.438V96.5ZM138.869 41.5602L138.875 41.5692L138.881 41.5781C140.191 43.5677 141 46.651 141 51.125C141 56.2488 140.203 59.6722 138.941 61.7401C137.8 63.6075 136.205 64.5156 133.797 64.5156C131.996 64.5156 130.644 64.1621 129.626 63.5862C128.76 63.0958 128.027 62.3831 127.438 61.3732V41.8586C127.994 40.9075 128.696 40.232 129.539 39.763C130.541 39.2059 131.89 38.8594 133.703 38.8594C136.088 38.8594 137.698 39.7478 138.869 41.5602ZM180.534 26.0298L180.322 23.7812H178.047H165.484H162.984V26.2812V96.5V99H165.484H179.031H181.531V96.5V77.8897C184.41 79.5932 187.739 80.4375 191.453 80.4375C198.243 80.4375 203.773 77.7458 207.792 72.4126C211.774 67.1389 213.641 60.2913 213.641 52.1094V51.4062C213.641 42.954 211.839 35.9834 207.938 30.7812C203.954 25.4698 198.322 22.8438 191.359 22.8438C187.259 22.8438 183.627 23.909 180.534 26.0298ZM192.963 41.5602L192.969 41.5692L192.975 41.5781C194.285 43.5677 195.094 46.651 195.094 51.125C195.094 56.2488 194.297 59.6722 193.034 61.7401C191.894 63.6075 190.299 64.5156 187.891 64.5156C186.09 64.5156 184.737 64.1621 183.72 63.5862C182.854 63.0958 182.121 62.3831 181.531 61.3733V41.8586C182.088 40.9075 182.79 40.232 183.633 39.763C184.635 39.2059 185.984 38.8594 187.797 38.8594C190.182 38.8594 191.791 39.7478 192.963 41.5602ZM225.8 83.0831C225.146 83.4918 223.814 83.8721 221.434 83.875L219.401 83.8288L216.844 83.7707V86.3281V96.5938V98.4676L218.642 98.9933C220.884 99.6487 223.121 99.9844 225.344 99.9844C229.238 99.9844 232.729 99.0533 235.701 97.0841C238.666 95.1196 240.949 92.2325 242.617 88.587L242.633 88.5523L242.648 88.517L243.773 85.8451L243.804 85.7718L243.83 85.6967L264.22 27.1029L265.376 23.7812H261.859H247.328H245.463L244.932 25.5691L237.947 49.0721L230.927 25.5658L230.394 23.7812H228.531H213.953H210.432L211.593 27.1057L229.057 77.1022L227.801 80.3909C227.799 80.3956 227.797 80.4003 227.795 80.405C227.218 81.8554 226.517 82.6458 225.823 83.0686L225.812 83.0758L225.8 83.0831ZM82.4738 64.0545C81.1648 64.7301 79.7238 65.0781 78.1094 65.0781C76.494 65.0781 75.5366 64.6591 74.9281 64.0986C74.2941 63.5147 73.9674 62.8207 73.9536 61.8314L73.993 61.1614C74.155 59.5202 74.8079 58.4991 75.8967 57.792C77.1249 56.9945 79.1655 56.4375 82.3281 56.4375H84.8906V61.9609C84.3419 62.7663 83.5598 63.4686 82.4738 64.0545Z" stroke="black" stroke-width="5"/>
+                    </svg>                        
+                    </div>
+                </div>
+                
+                <div class="div3d">
+                    <div class="boxwrapper">
+                        <div class="front"></div>
+                        <div class="back"></div>
+                        <div class="left"></div>
+                        <div class="right"></div>
+                    </div>
+                </div>
+                
+                <footer>
+                    <h3><a href="#first">맨 위로</h3>
+                </footer>
+            </div> 
+        </div>
+        <div class="hidden" onClick="window.open('./about.html', '', 'width=580, height=1000'); right:0; return false;">
+            <p>붉은색 푸른색<br>그 사이 3초 그 짧은 시간<br><br>이무진 - 신호등</p>
+            <div class="svgdiv">
+                    <svg>
+                        <circle r="50" cx="150" cy="60" fill="transparent" stroke="black" stroke-width="3"
+                        stroke-dasharray="150" stroke-dashoffset="0"/>
+                    </svg>
+            </div>
+        </div>
+<script>
+    document.querySelectorAll("path").forEach(p => {
+        console.log(p.getTotalLength());
+    })
+    document.querySelector(".svgwrapper").addEventListener("mouseover",function(){
+        document.querySelector(".mysvg").style.display = "block"
+    })
+    document.querySelector(".svgwrapper").addEventListener("mouseout",function(){
+        document.querySelector(".mysvg").style.display = "none"
+    })
+</script>
+</body>
